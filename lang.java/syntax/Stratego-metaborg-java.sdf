@@ -5,4 +5,4 @@ imports StrategoMix[StrategoHost]
         
 exports 
       context-free start-symbols 
-          Module[[StrategoHost]]        
+          Module[[StrategoHost]]

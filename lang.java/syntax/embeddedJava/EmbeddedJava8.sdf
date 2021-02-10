@@ -242,7 +242,23 @@ exports
   context-free syntax
     "~"     E         -> StringLit   {cons("FromMetaExpr")}
     "~strlit:"  E     -> StringLit   {cons("FromMetaExpr")}
-    
+
+  %%%
+  %% Quotations for Local Variable Declarations
+  %%%
+  context-free syntax
+    "java:lvdec"  "|[" LocalVariableDeclaration "]|" -> E {cons("ToMetaExpr")}
+    "java:lvdecs" "|[" LocalVariableDeclarationStatement "]|" -> E {cons("ToMetaExpr")}
+         "lvdec"  "|[" LocalVariableDeclaration "]|" -> E {cons("ToMetaExpr")}
+         "lvdecs" "|[" LocalVariableDeclarationStatement "]|" -> E {cons("ToMetaExpr")}
+
+  %%%
+  %% Anti-Quotation Local Variable Declarations
+  %%%
+  context-free syntax
+    "~"        E -> LocalVariableDeclaration {cons("FromMetaExpr")}
+    "~lvdec:"  E -> LocalVariableDeclaration {cons("FromMetaExpr")}
+   
 %%    "~" <E-CF> <LAYOUT?-CF> -> SingleChar  {cons("FromMetaExpr"), prefer}
 
 %%exports
@@ -335,12 +351,6 @@ exports
 %%     "vdec"               -> ID {reject}
 %%     "vdec_" [a-zA-Z0-9]* -> ID {reject}
 %%
-%%  %%%
-%%   %% Quotations for Local Variable Declarations
-%%   %%%
-%%  context-free syntax
-%%    "java:lvdec"  "|[" LocalVariableDeclaration "]|" -> E {cons("ToMetaExpr")}
-%%         "lvdec"  "|[" LocalVariableDeclaration "]|" -> E {cons("ToMetaExpr")}
 %%
 %%    "java:vdec" "|[" VarDecl "]|" -> E {cons("ToMetaExpr")}
 %%         "vdec" "|[" VarDecl "]|" -> E {cons("ToMetaExpr")}
@@ -544,14 +554,49 @@ exports
 %%    "java:import-dec*" "|[" ImportDec* "]|" -> E {cons("ToMetaListExpr")}
 %%         "import-dec*" "|[" ImportDec* "]|" -> E {cons("ToMetaListExpr")}
 %%
-%%  %%%
-%%   %% Anti Quotations for Import Declarations
-%%   %%%
-%%  context-free syntax
-%%
-%%    "~import-dec:"  E  -> ImportDec  {cons("FromMetaExpr")}
-%%    "~import-dec*:" E  -> ImportDec* {cons("FromMetaExpr")}
-%%
+
+  %%%
+  %% Quotations for Method Declarations
+  %%%
+  context-free syntax
+
+    "java:method-dec"  "|[" MethodDeclaration "]|" -> E {cons("ToMetaExpr")}
+         "method-dec"  "|[" MethodDeclaration "]|" -> E {cons("ToMetaExpr")}
+                       "|[" MethodDeclaration "]|" -> E {cons("ToMetaExpr")}
+
+  %%%
+  %% Quotations for Type Declarations
+  %%%
+  context-free syntax
+
+    "java:type-dec"  "|[" TypeDeclaration "]|" -> E {cons("ToMetaExpr")}
+         "type-dec"  "|[" TypeDeclaration "]|" -> E {cons("ToMetaExpr")}
+                     "|[" TypeDeclaration "]|" -> E {cons("ToMetaExpr")}
+                     "|[" TypeDeclaration "]|" -> E {cons("ToMetaExpr")}
+
+  %%%
+  %% Anti Quotations for Class Body Declarations
+  %%%
+  "~"  E  -> ClassBodyDeclaration  {cons("FromMetaExpr")}
+  "~*" E  -> ClassBodyDeclaration* {cons("FromMetaExpr")}
+
+  %%%
+  %% Anti Quotations for Import Declarations
+  %%%
+  context-free syntax
+
+    "~import-dec:"  E  -> ImportDeclaration  {cons("FromMetaExpr")}
+    "~import-dec*:" E  -> ImportDeclaration* {cons("FromMetaExpr")}
+
+  %%%
+  %% Anti Quotations for Type Declarations
+  %%%
+  context-free syntax
+
+    "~type-dec:"  E  -> TypeDeclaration  {cons("FromMetaExpr")}
+    "~type-dec*:" E  -> TypeDeclaration* {cons("FromMetaExpr")}
+
+
 %%%%%
 %% %% Must be cleaned up
 %% %%%
@@ -634,8 +679,7 @@ exports
 %%    "~"  E  -> TypeDec  {cons("FromMetaExpr")}
 %%    "~*" E  -> TypeDec* {cons("FromMetaExpr")}
 %%
-%%    "~"  E  -> ClassBodyDec  {cons("FromMetaExpr")}
-%%    "~*" E  -> ClassBodyDec* {cons("FromMetaExpr")}
+
 %%
 %%    "~"  E  -> InterfaceMemberDec  {cons("FromMetaExpr")}
 %%    "~*" E  -> InterfaceMemberDec* {cons("FromMetaExpr")}

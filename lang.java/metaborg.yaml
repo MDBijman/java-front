@@ -10,6 +10,8 @@ dependencies:
 exports:
 - language: Stratego-Sugar
   directory: src-gen
+- language: Stratego-Sugar
+  directory: trans
 - language: SDF
   directory: syntax
 - language: SDF
