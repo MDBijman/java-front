@@ -176,6 +176,22 @@ exports
     "bstm_" [a-zA-Z0-9\']* "*"  -> BlockStatement*   {prefer}
 
   %%%
+  %% Quotations for Constructor Invocation
+  %%%
+  context-free syntax
+    "java:constrinv"  "|[" ConstructorInvocation "]|" -> E {cons("ToMetaExpr")}
+         "constrinv"  "|[" ConstructorInvocation "]|" -> E {cons("ToMetaExpr")}
+    "java"            "|[" ConstructorInvocation "]|" -> E {cons("ToMetaExpr")}
+                      "|[" ConstructorInvocation "]|" -> E {cons("ToMetaExpr")}
+
+  %%%
+  %% Quotations for Constructor Invocation
+  %%%
+  context-free syntax
+    "~"            E  ->  ConstructorInvocation {cons("FromMetaExpr")}
+    "~constrinit:" E  ->  ConstructorInvocation {cons("FromMetaExpr")}
+
+  %%%
   %% Quotations for Expressions
   %%%
   context-free syntax
@@ -560,25 +576,52 @@ exports
   %%%
   context-free syntax
 
-    "java:method-dec"  "|[" MethodDeclaration "]|" -> E {cons("ToMetaExpr")}
-         "method-dec"  "|[" MethodDeclaration "]|" -> E {cons("ToMetaExpr")}
-                       "|[" MethodDeclaration "]|" -> E {cons("ToMetaExpr")}
+    "java:method-dec"  "|[" MethodDeclaration  "]|" -> E {cons("ToMetaExpr")}
+    "java:method-dec*" "|[" MethodDeclaration* "]|" -> E {cons("ToMetaExpr")}
+         "method-dec"  "|[" MethodDeclaration  "]|" -> E {cons("ToMetaExpr")}
+         "method-dec*" "|[" MethodDeclaration* "]|" -> E {cons("ToMetaExpr")}
+                       "|[" MethodDeclaration  "]|" -> E {cons("ToMetaExpr")}
+
+  %%%
+  %% Quotations for Field Declarations
+  %%%
+  context-free syntax
+
+    "java:field-dec"  "|[" FieldDeclaration "]|" -> E {cons("ToMetaExpr")}
+         "field-dec"  "|[" FieldDeclaration "]|" -> E {cons("ToMetaExpr")}
+                      "|[" FieldDeclaration "]|" -> E {cons("ToMetaExpr")}
 
   %%%
   %% Quotations for Type Declarations
   %%%
   context-free syntax
 
-    "java:type-dec"  "|[" TypeDeclaration "]|" -> E {cons("ToMetaExpr")}
-         "type-dec"  "|[" TypeDeclaration "]|" -> E {cons("ToMetaExpr")}
-                     "|[" TypeDeclaration "]|" -> E {cons("ToMetaExpr")}
-                     "|[" TypeDeclaration "]|" -> E {cons("ToMetaExpr")}
+    "java:type-dec"  "|[" TypeDeclaration  "]|" -> E {cons("ToMetaExpr")}
+    "java:type-dec*" "|[" TypeDeclaration* "]|" -> E {cons("ToMetaExpr")}
+         "type-dec"  "|[" TypeDeclaration  "]|" -> E {cons("ToMetaExpr")}
+         "type-dec*" "|[" TypeDeclaration* "]|" -> E {cons("ToMetaExpr")}
+                     "|[" TypeDeclaration  "]|" -> E {cons("ToMetaExpr")}
+                     "|[" TypeDeclaration  "]|" -> E {cons("ToMetaExpr")}
+
+  %%%
+  %% Quotations for Class Body Declarations
+  %%%
+  context-free syntax
+
+    "java:classb-dec"  "|[" ClassBodyDeclaration  "]|" -> E {cons("ToMetaExpr")}
+    "java:classb-dec*" "|[" ClassBodyDeclaration* "]|" -> E {cons("ToMetaExpr")}
+         "classb-dec"  "|[" ClassBodyDeclaration  "]|" -> E {cons("ToMetaExpr")}
+         "classb-dec*" "|[" ClassBodyDeclaration* "]|" -> E {cons("ToMetaExpr")}
+                       "|[" ClassBodyDeclaration  "]|" -> E {cons("ToMetaExpr")}
+                       "|[" ClassBodyDeclaration  "]|" -> E {cons("ToMetaExpr")}
 
   %%%
   %% Anti Quotations for Class Body Declarations
   %%%
   "~"  E  -> ClassBodyDeclaration  {cons("FromMetaExpr")}
   "~*" E  -> ClassBodyDeclaration* {cons("FromMetaExpr")}
+  "~classb-dec:"   E  -> ClassBodyDeclaration  {cons("FromMetaExpr")}
+  "~classb-dec*:"  E  -> ClassBodyDeclaration*  {cons("FromMetaExpr")}
 
   %%%
   %% Anti Quotations for Import Declarations
